@@ -1,0 +1,69 @@
+<h2>Welcome</h2>
+
+
+<%= form_for :search, url: search_user_home_index_path, remote: true, html: {class: "search-form"}, method: 'GET' do %>
+  <input type="text" placeholder="Search user by email address..." name="search">
+  <button type="submit" id="search-btn"><i class="fa fa-search"></i></button>
+<% end %>
+
+<div id="user-list"></div>
+
+<script type="text/javascript">
+	// $("input[name=search]").on("keyup", function(){
+	// 	if ($(this).val()){
+	// 		$("button[type=submit]").removeClass("disabled").addClass("active")
+	// 	}
+	// 	else{			
+	// 		$("button[type=submit]").removeClass("active").addClass("disabled")
+	// 	}
+	// })
+	$("#search-btn").click(function(){
+		var search_data = $("input[name=search]").val();
+		if (search_data){
+			return true;
+		}else{
+			alert("Please input email address.")
+			return false;
+		}
+	});
+</script>
+
+<style>
+	body {
+	  font-family: Arial;
+	}
+
+	* {
+	  box-sizing: border-box;
+	}
+
+	form.search-form input[type=text] {
+	  padding: 10px;
+	  font-size: 17px;
+	  border: none;
+	  float: left;
+	  width: 80%;
+	  background: #f1f1f1;
+	}
+
+	form.search-form button {
+	  float: left;
+	  width: 20%;
+	  padding: 10px;
+	  background: #2196F3;
+	  color: white;
+	  font-size: 17px;
+	  border: none;
+	  cursor: pointer;
+	}
+
+	form.search-form button:hover {
+	  background: #0b7dda;
+	}
+
+	form.search-form::after {
+	  content: "";
+	  clear: both;
+	  display: table;
+	}
+</style>

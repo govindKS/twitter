@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Twitter</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">        
+        	<p class="notice"><%= notice %></p>
+          <p class="alert"><%= alert %></p>
+          <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">Twitter</a>
+              </div>
+              <ul class="nav navbar-nav">
+          		  <%= render 'layouts/registration_items' %>
+          		  <%= render 'layouts/login_items' %>
+          		</ul>
+            </div>
+          </nav>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <%= yield %>
+            </div>
+          </div>
+      </div>  
+    </div>
+  </body>
+</html>
+<style type="text/css">
+  body {
+    background-color: rgba(149, 147, 152, 0.15);
+  }
+  .notice, .alert {
+    color: red;
+  }
+</style>

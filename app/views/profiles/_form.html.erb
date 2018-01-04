@@ -1,0 +1,46 @@
+<%= form_with(model: profile, local: true) do |form| %>
+  <% if profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+
+      <ul>
+      <% profile.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label for="email">First name:</label>    
+    <%= form.text_field :first_name, id: :profile_first_name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Last name:</label>
+    <%= form.text_field :last_name, id: :profile_last_name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <label for="email">About me:</label>
+    <%= form.text_area :about_me, id: :profile_about_me, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Date of birth:</label>
+    <%= form.date_select :date_of_birth, id: :profile_date_of_birth, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Profile image:</label>
+    <%= form.file_field :profile_image, id: :profile_profile_image %>
+  </div>
+
+  <div class="field">    
+    <%= form.hidden_field :user_id, value: current_user.id, id: :profile_user_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: "btn btn-default" %>
+  </div>
+<% end %>

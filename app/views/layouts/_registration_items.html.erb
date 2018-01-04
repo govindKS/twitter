@@ -1,0 +1,17 @@
+<% if user_signed_in? %>
+  <li>
+  	<%= link_to 'Home', home_index_path %>  	
+  </li>
+  <li><%= link_to('Edit registration', edit_user_registration_path) %></li>
+  <li>
+  	<% if current_user.profile %>
+  		<%= link_to 'Profile', profile_path(current_user.profile) %>
+  	<% else %>
+  		<%= link_to 'Add profile', new_profile_path %>
+  	<% end %>		
+	</li>
+<% else %>
+  <li>
+  	<%= link_to('Register', new_user_registration_path)  %>
+  </li>
+<% end %>
