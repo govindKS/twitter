@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :check_profile
   before_action :validate_edit_action, only: [:edit], if: :not_user_controller?
 
-  def check_profile
-  	if user_signed_in?
+  def check_profile   
+  	if user_signed_in? and controller_name != "sessions"
   		unless current_user.profile
   			redirect_to new_profile_path
         return false
