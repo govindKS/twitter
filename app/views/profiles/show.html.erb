@@ -1,24 +1,63 @@
-<div align="center">
+<div align="">
   <p id="notice"><%= notice %></p>
   <div class="row">
-    <%= image_tag(@profile.profile_image_url, size: "140x110", class: "img-rounded") unless @profile.profile_image_url.nil? %>
-  </div><br>
+    <div class="col-md-8 col-md-offset-1">
+      <div class="row">
+        <div class="col-md-4">
+          <%= image_tag(@profile.profile_image_url, size: "140x110", class: "img-rounded") unless @profile.profile_image_url.nil? %> 
+        </div>
+        <div class="col-md-4" align="right" id="follow-unfollow_id_<%= @profile.user.id%>">
+          <% unless @following_user.id == current_user.id %>
+            <% if is_following(@following_user.id) %>
+              <div class= "t-pointer" onclick="followFunction(<%= @following_user.id %>)">Follow</div>
+            <% else %>
+              <div class= "t-pointer" onclick="unFollowFunction(<%= @following_user.id %>)">Unfollow</div>
+            <% end %>
+          <% else %>
+            <p>Following - <%= link_to "#{@following_size}", following_list_following_index_path %></p>
+          <% end %>
+        </div>
+      </div><br>
 
-  <table class="table table-striped">    
-    <tbody align="center">
-      <tr>
-        <td><strong>First name:</strong> <%= @profile.first_name %></td>        
-      </tr>
-       <tr>
-        <td><strong>Last name:</strong> <%= @profile.last_name %></td>        
-      </tr>
-       <tr>
-        <td><strong>About me:</strong> <%= @profile.about_me %></td>        
-      </tr>
-       <tr>
-        <td><strong>Date of birth:</strong> <%= @profile.date_of_birth %></td>        
-      </tr>
-    </tbody>
-  </table>
+      <table class="table table-striped">    
+        <tbody align="">
+          <tr>
+            <td><strong>First name:</strong> <%= @profile.first_name %></td>        
+          </tr>
+           <tr>
+            <td><strong>Last name:</strong> <%= @profile.last_name %></td>        
+          </tr>
+           <tr>
+            <td><strong>About me:</strong> <%= @profile.about_me %></td>        
+          </tr>
+           <tr>
+            <td><strong>Date of birth:</strong> <%= @profile.date_of_birth %></td>        
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 <%= link_to 'Edit', edit_profile_path(@profile) unless params[:tag]%>
+
+<script type="text/javascript">
+  function followFunction(user) {
+    $.ajax({
+      url: "<%= follow_following_index_path%>",
+      data: {"following_user_id": user},
+      success: function(data){
+        $("#follow-unfollow_id_" + user).html('<div class= "t-pointer" onclick="unFollowFunction(' + user + ')">Unfollow</div>')
+      }
+    });
+  }
+
+  function unFollowFunction(user) {
+    $.ajax({
+      url: "<%= unfollow_following_index_path%>",
+      data: {"following_user_id": user},
+      success: function(data){
+        $("#follow-unfollow_id_" + user).html('<div class= "t-pointer" onclick="followFunction(' + user + ')">Follow</div>')
+      }
+    });
+  }
+</script>

@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
+  resources :tweets do
+    member do
+    end
+    
+    collection do
+    end    
+  end
   resources :profiles
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 	resources :home do
     collection do
       get 'search_user'
+      get 'tweets'
     end
   end
 
@@ -12,6 +20,14 @@ Rails.application.routes.draw do
     collection do
       get 'follow'
       get 'unfollow'
+      get 'following_list'
+    end
+  end
+
+  resources :likes do
+    collection do
+      get 'like'
+      get 'dislike'
     end
   end
 

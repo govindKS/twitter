@@ -4,7 +4,7 @@
   <% unless @users.blank? %>
     <% @users.each do |user|%>
       <tr>
-        <td><%= link_to "#{user.email}", profile_path(id: user, tag: 'Other') %></td>
+        <td><%= link_to "#{user.email}", profile_path(id: user.profile, tag: 'Other') %></td>
         <td><%= user.profile.first_name.titleize if user.profile %></td>
         <td id="follow-unfollow_id_<%= user.id%>">
           <% if is_following(user.id) %>
@@ -27,7 +27,7 @@
       url: "<%= follow_following_index_path%>",
       data: {"following_user_id": user},
       success: function(data){
-        $("td#follow-unfollow_id_" + user).html('<div class= "t-pointer" onclick="unFollowFunction(' + user + ')">Unfollow</div>')
+        $("#follow-unfollow_id_" + user).html('<div class= "t-pointer" onclick="unFollowFunction(' + user + ')">Unfollow</div>')
       }
     });
   }
@@ -37,13 +37,11 @@
       url: "<%= unfollow_following_index_path%>",
       data: {"following_user_id": user},
       success: function(data){
-        $("td#follow-unfollow_id_" + user).html('<div class= "t-pointer" onclick="followFunction(' + user + ')">Follow</div>')
+        $("#follow-unfollow_id_" + user).html('<div class= "t-pointer" onclick="followFunction(' + user + ')">Follow</div>')
       }
     });
   }
 </script>
 <style type="text/css">
-  .t-pointer{
-    cursor: pointer;
-  }
+  
 </style>

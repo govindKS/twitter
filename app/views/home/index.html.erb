@@ -1,12 +1,54 @@
-<h2>Welcome</h2>
-
+<p id="notice"><%= notice %></p>
+<h3>Tweets</h3>
 
 <%= form_for :search, url: search_user_home_index_path, remote: true, html: {class: "search-form"}, method: 'GET' do %>
-  <input type="text" placeholder="Search user by email address..." name="search">
+  <input type="text" placeholder="Search user by email address or name ..." name="search">
   <button type="submit" id="search-btn"><i class="fa fa-search"></i></button>
 <% end %>
+<br>
 
 <div id="user-list"></div>
+
+<div id="tweets_list">
+	<table class="table table-bordered">
+	  <thead>
+	    <tr>
+	      <th colspan="3">Tweet</th>	      
+	      <th colspan="3">Actions</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @tweets.each do |tweet| %>
+	      <tr>
+	        <td colspan="3">
+	        	<div class="row">
+						  <div class="col-md-10 col-md-offset-1">
+						    <div class="row">
+						      <div class="col-md-4">
+						        <%= image_tag(tweet.attachment_url, size: "80x65", class: "img-rounded") unless tweet.attachment_url.nil? %> 
+						      </div>
+						      <div class="col-md-6">
+						        <%= link_to "#{raw tweet.message}", tweet_path(tweet) %>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+	        </td>        
+	        <td id="like-id_<%= tweet.id%>">
+	        	<% if is_liked(tweet.id) %>
+		          <div class= "t-pointer" onclick="likeFunction(<%= tweet.id %>)">Like</div>
+		        <% else %>
+		          <div class= "t-pointer" onclick="dislikeFunction(<%= tweet.id %>)">Dislike</div>
+		        <% end %>
+	        </td>
+	        <td>Comment</td>
+	        <td>Re-tweet</td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+</div>
+<br>
 
 <script type="text/javascript">
 	// $("input[name=search]").on("keyup", function(){
@@ -26,6 +68,28 @@
 			return false;
 		}
 	});
+</script>
+
+<script type="text/javascript">
+  function likeFunction(tweet) {
+    $.ajax({
+      url: "<%= like_likes_path %>",
+      data: {"tweet_id": tweet},
+      success: function(data){
+        $("#like-id_" + tweet).html('<div class= "t-pointer" onclick="dislikeFunction(' + tweet + ')">Dislike</div>')
+      }
+    });
+  }
+
+  function dislikeFunction(tweet) {
+    $.ajax({
+      url: "<%= dislike_likes_path%>",
+      data: {"tweet_id": tweet},
+      success: function(data){
+        $("#like-id_" + tweet).html('<div class= "t-pointer" onclick="likeFunction(' + tweet + ')">Like</div>')
+      }
+    });
+  }
 </script>
 
 <style>

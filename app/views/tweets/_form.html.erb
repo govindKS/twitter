@@ -1,0 +1,31 @@
+<%= form_with(model: tweet, local: true) do |form| %>
+  <% if tweet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tweet.errors.count, "error") %> prohibited this tweet from being saved:</h2>
+
+      <ul>
+      <% tweet.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <label for="message">Message Text:</label>
+    <%= form.label :message %>
+    <%= form.text_area :message, id: :tweet_message, class: "form-control", size: "10x5" %>
+  </div>
+
+  <div class="form-group">
+    <label for="attachment">Attachment:</label>
+    <%= form.file_field :attachment, id: :tweet_attachment %>
+  </div>
+
+  <div class="field">    
+    <%= form.hidden_field :user_id, value: current_user.id, id: :tweet_user_id %>
+  </div>
+  <div class="actions">
+    <%= form.submit class: "btn btn-default"%>
+  </div>
+<% end %>

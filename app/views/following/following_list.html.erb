@@ -1,0 +1,10 @@
+<table class="table table-striped">    
+  <tbody> 
+    <% @total_following.each do |user|%>
+      <tr>
+        <td><%= link_to "#{user.email}", profile_path(id: user.profile, tag: 'Other') %></td>
+        <td><%= user.profile.first_name.titleize if user.profile %></td>        
+      </tr>
+    <% end %>  
+  </tbody>
+</table>

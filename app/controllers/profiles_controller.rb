@@ -1,16 +1,20 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_profile, only: [:new, :create, :index]
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
   # GET /profiles
   # GET /profiles.json
   def index
-    @profiles = Profile.all
+    @profiles = current_user.profile
   end
 
   # GET /profiles/1
   # GET /profiles/1.json
   def show
+    @following_user = @profile.user
+    @total_following = Following.where(user_id: current_user.id, is_following: true)
+    @following_size = @total_following.size
   end
 
   # GET /profiles/new
@@ -71,5 +75,14 @@ class ProfilesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
       params.require(:profile).permit(:first_name, :last_name, :about_me, :date_of_birth, :profile_image, :user_id)
+    end
+
+    #validate Profile exist or not
+    def check_profile     
+      if current_user.profile        
+        redirect_to profile_path(current_user.profile)   
+      else
+        return true
+      end
     end
 end

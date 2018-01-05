@@ -1,0 +1,81 @@
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-md-8 col-md-offset-1">
+    <div class="row">
+      <div class="col-md-4">
+        <%= image_tag(@tweet.attachment_url, size: "110x90", class: "img-rounded") unless @tweet.attachment_url.nil? %> 
+      </div>
+      <div class="col-md-4">
+        <%= raw @tweet.message %>
+      </div>
+    </div>
+  </div>
+</div><br>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-1">
+    <div class="row">
+      <div class="col-md-3" id="like-id_<%= @tweet.id%>">    
+        <% if is_liked(@tweet.id) %>
+          <div class= "t-pointer" onclick="likeFunction(<%= @tweet.id %>)">Like</div>
+        <% else %>
+          <div class= "t-pointer" onclick="dislikeFunction(<%= @tweet.id %>)">Dislike</div>
+        <% end %>
+      </div>
+      <div class="col-md-3">
+        comment
+      </div>
+      <div class="col-md-3">
+        retweet
+      </div>
+    </div>
+  </div>
+</div><br>
+<div class="row">
+  <div class="col-md-8 col-md-offset-1">
+    <div class="row">
+      <div class="col-md-3" id="total-liked">    
+        <%= @total_liked.size %>
+      </div>
+      <div class="col-md-3">
+        comment
+      </div>
+      <div class="col-md-3">
+        retweet
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <%= link_to 'Edit', edit_tweet_path(@tweet) %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var tLiked = <%= @total_liked.size %>
+  function likeFunction(tweet) {
+    $.ajax({
+      url: "<%= like_likes_path %>",
+      data: {"tweet_id": tweet},
+      success: function(data){
+        $("#like-id_" + tweet).html('<div class= "t-pointer" onclick="dislikeFunction(' + tweet + ')">Dislike</div>');
+        $("#total-liked").html(parseInt(tLiked) + 1 );
+        tLiked = parseInt(tLiked) + 1;
+      }
+    });
+  }
+
+  function dislikeFunction(tweet) {
+    $.ajax({
+      url: "<%= dislike_likes_path%>",
+      data: {"tweet_id": tweet},
+      success: function(data){
+        $("#like-id_" + tweet).html('<div class= "t-pointer" onclick="likeFunction(' + tweet + ')">Like</div>');
+        $("#total-liked").html(parseInt(tLiked) - 1 );
+        tLiked = parseInt(tLiked) - 1;
+      }
+    });
+  }
+</script>
