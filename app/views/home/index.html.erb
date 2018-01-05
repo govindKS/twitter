@@ -41,7 +41,7 @@
 		          <div class= "t-pointer" onclick="dislikeFunction(<%= tweet.id %>)">Dislike</div>
 		        <% end %>
 	        </td>
-	        <td onclick="addTweetId(<%= tweet.id %>)"><a data-toggle="modal" data-target="#myModal">Comment</a></td>
+	        <td onclick="addTweetId(<%= tweet.id %>, 'Tweet')"><a data-toggle="modal" data-target="#myModal">Comment</a></td>
 	        <td>Re-tweet</td>
 	      </tr>
 	    <% end %>
@@ -73,7 +73,8 @@
 
 				  <div class="field">    
 				    <%= form.hidden_field :user_id, value: current_user.id, id: :comment_user_id %>
-				    <%= form.hidden_field :tweet_id, id: :comment_tweet_id %>				    
+				    <%= form.hidden_field :commentable_id, id: :comment_commentable_id %>
+				    <%= form.hidden_field :commentable_type, id: :comment_commentable_type %>				    
 				  </div>
 				  <div class="actions">
 				    <%= form.submit class: "btn btn-default"%>

@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require_tree .
 
-function addTweetId(tweet){
-	$("#comment_tweet_id").val(tweet);
+function addTweetId(commentable_id, class_name){
+	$("#comment_commentable_id").val(commentable_id);
+	$("#comment_commentable_type").val(class_name);
 }

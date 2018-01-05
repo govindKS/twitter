@@ -23,7 +23,7 @@
         <% end %>
       </div>
       <div class="col-md-3">
-        <div onclick="addTweetId(<%= @tweet.id %>)"><a data-toggle="modal" data-target="#myModal">Comment</a></div>
+        <div onclick="addTweetId(<%= @tweet.id %>, 'Tweet')"><a data-toggle="modal" data-target="#myModal">Comment</a></div>
       </div>
       <div class="col-md-3">
         retweet
@@ -74,7 +74,15 @@
                 <div class="col-md-6">
                   <%= raw comment.message %>
                 </div>
-              </div>
+              </div><br/>
+              <!-- <div class="row">
+                <div class="col-md-3">
+                  Like
+                </div>
+                <div class="col-md-3">
+                  <div onclick="addTweetId(<%#= comment.id %>, 'Comment')"><a data-toggle="modal" data-target="#myModal">Reply</a></div>
+                </div>
+              </div> -->
             </div>
           </div>
         </td>        
@@ -105,8 +113,10 @@
 
           <div class="field">    
             <%= form.hidden_field :user_id, value: current_user.id, id: :comment_user_id %>
-            <%= form.hidden_field :tweet_id, id: :comment_tweet_id %>
-            <%= hidden_field_tag :tags, "SHOW" %>           
+            <%= form.hidden_field :commentable_id, id: :comment_commentable_id %>
+            <%= form.hidden_field :commentable_type, id: :comment_commentable_type %>
+            <%= hidden_field_tag :tags, "SHOW" %>
+            <%= hidden_field_tag :tweet_id, @tweet.id %>
           </div>
           <div class="actions">
             <%= form.submit class: "btn btn-default"%>
