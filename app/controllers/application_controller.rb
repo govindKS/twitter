@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
   before_action :check_profile
-  before_action :validate_edit_action, only: [:edit]
+  before_action :validate_edit_action, only: [:edit], if: :not_user_controller?
 
   def check_profile
   	if user_signed_in?
@@ -23,4 +23,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  private
+
+  def not_user_controller?    
+    unless controller_name == "registrations"
+      return true
+    end
+  end
 end

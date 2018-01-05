@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 <div class="row">
   <div class="col-md-8 col-md-offset-1">
+    <u><h4>Tweeted by <%= link_to "#{@tweet.user.profile.first_name}", profile_path(@tweet.user.profile, tag: 'Other') %></h4></u>
     <div class="row">
       <div class="col-md-4">
         <%= image_tag(@tweet.attachment_url, size: "110x90", class: "img-rounded") unless @tweet.attachment_url.nil? %> 
@@ -62,8 +63,13 @@
     </tr>
   </thead>
   <tbody>
-    <% @total_comments.each do |comment| %>
+    <% @total_comments.each do |comment| %> 
       <tr>
+        <td colspan="3">
+          <u><p>Tweeted by <%= link_to "#{comment.user.profile.first_name}", profile_path(comment.user.profile, tag: 'Other') %></p></u>
+        </td>
+      </tr>
+      <tr>      
         <td colspan="3">
           <div class="row">
             <div class="col-md-10 col-md-offset-1">

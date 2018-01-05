@@ -12,6 +12,7 @@ class HomeController < ApplicationController
 	end
 
 	def tweets
-		@tweets = Tweet.all
+		@following_ids = current_user.followings.pluck(:following_user_id)
+		@tweets = Tweet.where(user_id: @following_ids)
 	end
 end
