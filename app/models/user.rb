@@ -7,4 +7,5 @@ class User < ApplicationRecord
   has_many :followings
   belongs_to :following_user, class_name: 'Following', foreign_key: 'id'
   has_many :tweets
+  has_many :comments
 end

@@ -12,6 +12,7 @@ class TweetsController < ApplicationController
   # GET /tweets/1.json
   def show
     @total_liked = @tweet.likes.where(:is_like => true)
+    @total_comments = @tweet.comments
   end
 
   # GET /tweets/new

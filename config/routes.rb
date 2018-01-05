@@ -31,6 +31,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :comments do
+    collection do
+      post 'create_comment' 
+    end
+  end
+
 	devise_scope :user do
     authenticated :user do
       root to: "home#index", as: :authenticated_root

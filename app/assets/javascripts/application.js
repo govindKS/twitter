@@ -14,3 +14,7 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+
+function addTweetId(tweet){
+	$("#comment_tweet_id").val(tweet);
+}
