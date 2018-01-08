@@ -13,10 +13,10 @@ class ProfilesController < ApplicationController
   # GET /profiles/1.json
   def show
     @following_user = @profile.user
-    @total_following = Following.where(user_id: current_user.id, is_following: true)
+    @total_following = Following.where(user_id: @following_user.id, is_following: true)
     @following_size = @total_following.size
-    @tweets = current_user.tweets
-    @follwers = Following.where(:following_user_id => current_user.id)
+    @tweets = @following_user.tweets
+    @follwers = Following.where(:following_user_id => @following_user.id)
   end
 
   # GET /profiles/new
