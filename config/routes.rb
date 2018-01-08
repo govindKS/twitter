@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     end
     
     collection do
+      get 'retweet'
     end    
   end
   resources :profiles

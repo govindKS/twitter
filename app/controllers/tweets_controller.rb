@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_tweet, only: [:show, :edit, :update, :destroy]
+  before_action :set_tweet, only: [:show, :edit, :update, :destroy, :retweet]
 
   # GET /tweets
   # GET /tweets.json
@@ -13,6 +13,7 @@ class TweetsController < ApplicationController
   def show
     @total_liked = @tweet.likes.where(:is_like => true)
     @total_comments = @tweet.comments
+    @retweets = Tweet.where(:current_tweet_id => @tweet.id, is_retweet: true)
   end
 
   # GET /tweets/new
@@ -61,6 +62,15 @@ class TweetsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tweets_url, notice: 'Tweet was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  #Re-Tweet
+  def retweet
+    @retweet = Tweet.create(message: @tweet.message, attachment: @tweet.attachment, :user_id => current_user.id, is_retweet: true, current_tweet_id: @tweet.id)
+    respond_to do |format|
+      flash[:notice] = "Re-Tweet has been successfully"
+      format.html {redirect_to home_index_path}
     end
   end
 

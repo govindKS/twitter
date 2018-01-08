@@ -13,8 +13,7 @@
 	<table class="table table-bordered">
 	  <thead>
 	    <tr>
-	      <th colspan="3">Tweet</th>	      
-	      <th colspan="3">Actions</th>
+	      <th colspan="3">Tweets</th>      
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -32,17 +31,23 @@
 						      </div>
 						    </div>
 						  </div>
-						</div>
+						</div><br/>
+						<div class="row">
+							<div class="col-md-10 col-md-offset-1">
+								<div class="row">
+									<div class="col-md-4" id="like-id_<%= tweet.id%>">
+					        	<% if is_liked(tweet.id) %>
+						          <div class= "t-pointer" onclick="likeFunction(<%= tweet.id %>)">Like</div>
+						        <% else %>
+						          <div class= "t-pointer" onclick="dislikeFunction(<%= tweet.id %>)">Dislike</div>
+						        <% end %>
+					        </div>					      
+				        	<div class="col-md-4"  onclick="addTweetId(<%= tweet.id %>, 'Tweet')"><a data-toggle="modal" data-target="#myModal">Comment</a></div>				        
+				        	<div class="col-md-4" ><%= link_to "Re-tweet", retweet_tweets_path(:id => tweet.id) %></div>
+				        </div>
+				      </div>
+			      </div>
 	        </td>        
-	        <td id="like-id_<%= tweet.id%>">
-	        	<% if is_liked(tweet.id) %>
-		          <div class= "t-pointer" onclick="likeFunction(<%= tweet.id %>)">Like</div>
-		        <% else %>
-		          <div class= "t-pointer" onclick="dislikeFunction(<%= tweet.id %>)">Dislike</div>
-		        <% end %>
-	        </td>
-	        <td onclick="addTweetId(<%= tweet.id %>, 'Tweet')"><a data-toggle="modal" data-target="#myModal">Comment</a></td>
-	        <td>Re-tweet</td>
 	      </tr>
 	    <% end %>
 	  </tbody>
