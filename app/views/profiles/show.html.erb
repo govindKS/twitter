@@ -1,44 +1,43 @@
-<div align="">
-  <p id="notice"><%= notice %></p>
+<p id="notice"><%= notice %></p>
+<!-- <div align="">
   <div class="row">
     <div class="col-md-8 col-md-offset-1">
       <div class="row">
         <div class="col-md-4">
-          <%= image_tag(@profile.profile_image_url, size: "140x110", class: "img-rounded") unless @profile.profile_image_url.nil? %> 
+          <%#= image_tag(@profile.profile_image_url, size: "140x110", class: "img-rounded") unless @profile.profile_image_url.nil? %> 
         </div>
         <div class="col-md-4" align="right" id="follow-unfollow_id_<%= @profile.user.id%>">
-          <% unless @following_user.id == current_user.id %>
-            <% if is_following(@following_user.id) %>
-              <div class= "t-pointer" onclick="followFunction(<%= @following_user.id %>)">Follow</div>
-            <% else %>
-              <div class= "t-pointer" onclick="unFollowFunction(<%= @following_user.id %>)">Unfollow</div>
-            <% end %>
-          <% else %>
-            <p>Following - <%= link_to "#{@following_size}", following_list_following_index_path %></p>
-          <% end %>
+          <%# unless @following_user.id == current_user.id %>
+            <%# if is_following(@following_user.id) %>
+              <div class= "t-pointer" onclick="followFunction(<%#= @following_user.id %>)">Follow</div>
+            <%# else %>
+              <div class= "t-pointer" onclick="unFollowFunction(<%#= @following_user.id %>)">Unfollow</div>
+            <%# end %>
+          <%# else %>
+            <p>Following - <%#= link_to "#{@following_size}", following_list_following_index_path %></p>
+          <%# end %>
         </div>
       </div><br>
 
       <table class="table table-striped">    
         <tbody align="">
           <tr>
-            <td><strong>First name:</strong> <%= @profile.first_name %></td>        
+            <td><strong>First name:</strong> <%#= @profile.first_name %></td>        
           </tr>
            <tr>
-            <td><strong>Last name:</strong> <%= @profile.last_name %></td>        
+            <td><strong>Last name:</strong> <%#= @profile.last_name %></td>        
           </tr>
            <tr>
-            <td><strong>About me:</strong> <%= @profile.about_me %></td>        
+            <td><strong>About me:</strong> <%#= @profile.about_me %></td>        
           </tr>
            <tr>
-            <td><strong>Date of birth:</strong> <%= @profile.date_of_birth %></td>        
+            <td><strong>Date of birth:</strong> <%#= @profile.date_of_birth %></td>        
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-</div>
-<%= link_to 'Edit', edit_profile_path(@profile) unless params[:tag]%>
+</div> -->
 
 <script type="text/javascript">
   function followFunction(user) {
@@ -46,7 +45,7 @@
       url: "<%= follow_following_index_path%>",
       data: {"following_user_id": user},
       success: function(data){
-        $("#follow-unfollow_id_" + user).html('<div class= "t-pointer" onclick="unFollowFunction(' + user + ')">Unfollow</div>')
+        $("#follow-unfollow_id_" + user).html('<div class= "t-pointer btn btn-primary" onclick="unFollowFunction(' + user + ')">Unfollow</div>')
       }
     });
   }
@@ -56,8 +55,80 @@
       url: "<%= unfollow_following_index_path%>",
       data: {"following_user_id": user},
       success: function(data){
-        $("#follow-unfollow_id_" + user).html('<div class= "t-pointer" onclick="followFunction(' + user + ')">Follow</div>')
+        $("#follow-unfollow_id_" + user).html('<div class= "t-pointer btn btn-primary" onclick="followFunction(' + user + ')">Follow</div>')
       }
     });
   }
 </script>
+
+
+<div class="row">  
+  <div class="twPc-div">
+    <a class="twPc-bg twPc-block"></a>
+
+    <div>
+      <div class="twPc-button" id="follow-unfollow_id_<%= @profile.user.id%>">
+        <% unless @following_user.id == current_user.id %>
+          <% if is_following(@following_user.id) %>
+            <div class= "t-pointer btn btn-primary" onclick="followFunction(<%= @following_user.id %>)">Follow</div>
+          <% else %>
+            <div class= "t-pointer btn btn-primary" onclick="unFollowFunction(<%= @following_user.id %>)">Following</div>
+          <% end %>
+        <% end %>         
+      </div><br><br>
+
+      <a title="<%= @profile.first_name %>" href="#" class="twPc-avatarLink">
+        <img alt="<%= @profile.first_name %>" src="<%= @profile.profile_image_url%>" class="twPc-avatarImg">
+      </a>
+
+      <div class="twPc-divUser">
+        <div class="twPc-divName">
+          <a href="#"><%= @profile.first_name.titleize + " " + @profile.last_name.titleize %></a>
+        </div>
+        <span>
+          <a href="#">@<span><%= @profile.first_name %></span></a>
+        </span>
+      </div><br/>
+
+      <div class="twPc-divStats">
+        <ul class="twPc-Arrange">
+          <li class="twPc-ArrangeSizeFit">
+            <a href="#">
+              <span class="twPc-StatLabel twPc-block">Tweets</span>
+              <span class="twPc-StatValue"><%= @tweets.size %></span>
+            </a>
+          </li>
+          <li class="twPc-ArrangeSizeFit">
+            <a href="<%= following_list_following_index_path %>" title="885 Following">
+              <span class="twPc-StatLabel twPc-block">Following</span>
+              <span class="twPc-StatValue"><%= "#{@following_size}" %></span>
+            </a>
+          </li>
+          <li class="twPc-ArrangeSizeFit">
+            <a href="#" title="1.810 Followers">
+              <span class="twPc-StatLabel twPc-block">Followers</span>
+              <span class="twPc-StatValue"><%= @follwers.size %></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div><br><br>
+
+<div class="row">
+  <div class="col-md-12">
+    <h5><strong>About me:</strong></h5>
+    <p><%= raw @profile.about_me %></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h5><strong>Date of birth:</strong></h5>
+    <p><%= @profile.date_of_birth %></p>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_profile_path(@profile) unless params[:tag]%>
+
