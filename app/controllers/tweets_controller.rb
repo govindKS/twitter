@@ -13,7 +13,8 @@ class TweetsController < ApplicationController
   def show
     @total_liked = @tweet.likes.where(:is_like => true)
     @total_comments = @tweet.comments
-    @retweets = Tweet.where(:current_tweet_id => @tweet.id, is_retweet: true)
+    # @retweets = Tweet.where(:current_tweet_id => @tweet.id, is_retweet: true)
+    @retweets = Tweet.get_retweet(@tweet.id)
   end
 
   # GET /tweets/new
