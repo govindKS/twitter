@@ -126,7 +126,7 @@
 <div class="row">
   <div class="col-md-12">
     <h5><strong>Date of birth:</strong></h5>
-    <p><%= @profile.date_of_birth %></p>
+    <p><%= @profile.date_of_birth.strftime("%d %B %Y") %></p>
   </div>
 </div>
 
