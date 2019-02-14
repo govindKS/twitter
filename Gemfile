@@ -60,3 +60,4 @@ gem 'devise'
 gem 'carrierwave'
 gem "omniauth-google-oauth2"
 gem 'google-api-client', '~> 0.8.2'#, require: 'google/api_client'
+gem 'icalendar', '~> 2.3'

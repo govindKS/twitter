@@ -55,3 +55,66 @@ response.items.each do |event|
   start = event.start.date || event.start.date_time
   puts "- #{event.summary} (#{start})"
 end
+
+
+def abc
+
+    # ical = Icalendar::Calendar.new
+    # e = Icalendar::Event.new
+    # binding.pry
+    # binding.pry
+    # e.start = DateTime.now.utc
+    # e.start.icalendar_tzid="UTC" # set timezone as "UTC"
+    # e.end = (DateTime.now + 1.day).utc
+    # e.end.icalendar_tzid="UTC"
+    # e.organizer "any_email@example.com"
+    # e.uid "MeetingRequest#sdfdsf"
+    # e.summary "Scrum Meeting"
+    # ical.add_event(e)
+    # ical.publish
+
+
+    ical = Icalendar::Calendar.new
+  #   ical.event do |e|
+  #     e.dtstart     = Date.today+1
+  #     e.dtend       = Date.today+2
+  #     e.summary     = "Meeting with the man."
+  #     e.description = "Have a long lunch meeting and decide nothing..."
+  #     e.ip_class    = "PRIVATE"
+  #   end
+
+  # ical.publish
+
+
+  event = Icalendar::Event.new
+event.dtstart = DateTime.civil(2019, 2, 17, 8, 30)
+event.summary = "A great event!"
+ical.add_event(event)
+
+event2 = ical.event  # This automatically adds the event to the calendar
+event2.dtstart = DateTime.civil(2019, 2, 18, 8, 30)
+event2.summary = "Another great event!"
+ical.publish
+  # Add the .ics as an attachment
+  attachments['event.ics'] = { mime_type: 'application/ics', content: ical.to_ical }
+
+  mail(from: "govind.k@bitlasoft.com", to: "govind.mietcse@gmail.com", subject: "Appointment")
+  # mail(from: "govind.k@bitlasoft.com", to: "govind.mietcse@gmail.com", subject: "Appointment") do |format|
+  #   format.ics {
+  #     ical = Icalendar::Calendar.new
+  #     e = Icalendar::Event.new
+  #     binding.pry
+  #     # e.start = DateTime.now.utc
+  #     # e.start.icalendar_tzid="UTC" # set timezone as "UTC"
+  #     # e.end = (DateTime.now + 1.day).utc
+  #     # e.end.icalendar_tzid="UTC"
+  #     # e.organizer "any_email@example.com"
+  #     # e.uid "MeetingRequest#sdfdsf"
+  #     # e.summary "Scrum Meeting"
+  #     ical.add_event(e)
+  #     ical.publish
+  #     ical.to_ical
+  #     render :text => ical.to_ical
+  #   }
+  # end
+end
